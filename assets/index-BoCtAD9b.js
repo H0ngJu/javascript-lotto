@@ -111,6 +111,28 @@ const LottoGame = {
   bonusNumber: 0,
   winningNumbers: []
 };
+const disableWinningInputs = () => {
+  DOM.bonusInput.disabled = true;
+  DOM.bonusInput.style.cursor = "not-allowed";
+  DOM.winningInputs.forEach((input) => {
+    input.disabled = true;
+    input.style.cursor = "not-allowed";
+  });
+};
+const disablePurchaseInputs = () => {
+  DOM.purchaseButton.disabled = true;
+  DOM.purchaseButton.style.cursor = "not-allowed";
+  DOM.purchaseInput.disabled = true;
+  DOM.purchaseInput.style.cursor = "not-allowed";
+};
+const handleModalCloseClick = () => {
+  DOM.modal.style.display = "none";
+  document.body.style.overflow = "";
+};
+const showModal = () => {
+  DOM.modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+};
 const WEB_OUTPUT = Object.freeze({
   PURCHASED_QUANTITY: (quantity) => `총 ${quantity}개를 구매하였습니다.`,
   MATCH_COUNT: (count) => `${count}개`,
@@ -140,7 +162,7 @@ const showLotto = (lotto) => {
   container.id = "lotto";
   const img = new Image();
   img.id = "lotto-image";
-  img.src = "../../../images/lottoImage.png";
+  img.src = "../web/images/lotto.png";
   img.alt = "lotto-image";
   const numbersDiv = document.createElement("div");
   numbersDiv.innerHTML = lotto.getNumbers().join(", ");
@@ -155,7 +177,7 @@ const showResultsModal = (matchCounts, revenue) => {
   DOM.fiveCountWithBonus.innerText = WEB_OUTPUT.MATCH_COUNT(matchCounts[LOTTO_SYSTEM.FIVE_WITH_BONUS_MATCH_IDX]);
   DOM.sixCount.innerText = WEB_OUTPUT.MATCH_COUNT(matchCounts[LOTTO_SYSTEM.SIX_MATCH]);
   DOM.revenueContainer.innerText = WEB_OUTPUT.TOTAL_REVENUE(revenue);
-  DOM.modal.style.display = "flex";
+  showModal();
 };
 const validateLottoNumbers = (lottoNumbers) => {
   if (!Array.isArray(lottoNumbers)) {
@@ -218,24 +240,6 @@ const generateLotto = () => {
     return array;
   };
   return shuffle(NUMBERS).slice(0, 6).sort((a, b) => a - b);
-};
-const disableWinningInputs = () => {
-  DOM.bonusInput.disabled = true;
-  DOM.bonusInput.style.cursor = "not-allowed";
-  DOM.winningInputs.forEach((input) => {
-    input.disabled = true;
-    input.style.cursor = "not-allowed";
-  });
-};
-const disablePurchaseInputs = () => {
-  DOM.purchaseButton.disabled = true;
-  DOM.purchaseButton.style.cursor = "not-allowed";
-  DOM.purchaseInput.disabled = true;
-  DOM.purchaseInput.style.cursor = "not-allowed";
-};
-const handleModalCloseClick = () => {
-  DOM.modal.style.display = "none";
-  document.body.style.overflow = "";
 };
 const handlePurchaseSubmit = (event) => {
   event.preventDefault();
