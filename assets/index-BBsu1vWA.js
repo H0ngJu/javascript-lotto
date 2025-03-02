@@ -162,7 +162,7 @@ const showLotto = (lotto) => {
   container.id = "lotto";
   const img = new Image();
   img.id = "lotto-image";
-  img.src = "../web/images/lotto.png";
+  img.src = "/images/lottoImage.png";
   img.alt = "lotto-image";
   const numbersDiv = document.createElement("div");
   numbersDiv.innerHTML = lotto.getNumbers().join(", ");
